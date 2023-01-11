@@ -1,7 +1,9 @@
 package com.jy.swu.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jy.swu.privateStudy.model.PrivateStudy;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,13 +20,11 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "UserId", columnDefinition = "BINARY(16)")
-    private UUID id;
-
     @Column(nullable = false)
     private String userName;
+
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -32,9 +32,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PrivateStudy> privateStudyList = new ArrayList<>();
+
+    @Builder
+    public User(String username, String name, String email, String password){
+        this.email = email;
+        this.name = name;
+        this.userName = username;
+        this.password = password;
+    }
 
 
 }

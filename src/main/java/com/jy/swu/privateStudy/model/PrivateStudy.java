@@ -1,7 +1,9 @@
 package com.jy.swu.privateStudy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jy.swu.user.model.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,6 +11,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -19,18 +22,23 @@ public class PrivateStudy {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "PrivateStudyId", columnDefinition = "BINARY(16)")
-    private String id;
+    private UUID id;
 
     @Column(nullable = false, name = "PrivateStudyName")
     private String name;
 
-    @Column(nullable = false)
     @OneToMany(mappedBy = "privateStudy")
     private List<Todo> todoList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Users_Id")
+    @JoinColumn(name = "Users_userName")
+    @JsonIgnore
     private User user;
 
+    @Builder
+    public PrivateStudy(String name, User user){
+        this.name = name;
+        this.user = user;
+    }
 
 }
