@@ -1,6 +1,8 @@
 package com.jy.swu.privateStudy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +25,15 @@ public class Todo {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "PrivateStudy_Id")
+    @JsonIgnore
     private PrivateStudy privateStudy;
+
+    @Builder
+    public Todo(String name, PrivateStudy privateStudy){
+        this.name = name;
+        this.complete = false;
+        this.privateStudy = privateStudy;
+    }
 
 
 }

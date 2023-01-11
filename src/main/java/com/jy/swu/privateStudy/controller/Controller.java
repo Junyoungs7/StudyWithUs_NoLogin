@@ -1,6 +1,7 @@
 package com.jy.swu.privateStudy.controller;
 
 import com.jy.swu.privateStudy.dto.CreateStudyRequestDTO;
+import com.jy.swu.privateStudy.dto.CreateTodoRequestDTO;
 import com.jy.swu.privateStudy.model.PrivateStudy;
 import com.jy.swu.privateStudy.service.PrivateStudyService;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,14 @@ public class Controller {
     public ResponseEntity<?> getPrivateList(@PathVariable("username")String userName){
         try{
             List<PrivateStudy> privateStudyList = studyService.findStudyList(userName);
-            log.info("controller list: "+privateStudyList.get(0).getName());
             return ResponseEntity.ok().body(privateStudyList);
         }catch (IllegalStateException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PostMapping("/")
+    //개인 스터디 생성
+    @PostMapping("/create")
     public ResponseEntity<?> createPrivateStudy(@Valid @RequestBody CreateStudyRequestDTO requestDTO, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
@@ -49,5 +50,21 @@ public class Controller {
 
     }
 
+    // todo 생성
+    @PostMapping("/{userName}/{studyName}")
+    public ResponseEntity<?> createTodo(@PathVariable("userName") String userName,
+                                        @PathVariable("studyName") String studyName,
+                                        @Valid @RequestBody CreateTodoRequestDTO requestDTO, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return ResponseEntity.badRequest().body("잘못된 요청입니다.");
+        }
+        try{
+            studyService.createTodo(requestDTO.getName(), studyName);
+            return ResponseEntity.ok().body("Todo 생성!");
+        }catch (IllegalStateException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
 
 }

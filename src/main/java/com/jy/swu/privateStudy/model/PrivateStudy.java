@@ -41,4 +41,9 @@ public class PrivateStudy {
         this.user = user;
     }
 
+    public PrivateStudy saveTodoList(Todo todo){
+        todoList.add(todo);
+        return null;
+    }
+
 }
