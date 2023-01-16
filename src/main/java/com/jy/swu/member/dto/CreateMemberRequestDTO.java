@@ -1,4 +1,4 @@
-package com.jy.swu.user.dto;
+package com.jy.swu.member.dto;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CreateUserRequestDTO {
+public class CreateMemberRequestDTO {
 
     @NotNull
     private String userName;
@@ -24,7 +24,7 @@ public class CreateUserRequestDTO {
     private String password;
 
     @Builder
-    public CreateUserRequestDTO(String userName, String email, String name, String password){
+    public CreateMemberRequestDTO(String userName, String email, String name, String password){
         this.userName = userName;
         this.email = email;
         this.name = name;

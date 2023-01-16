@@ -1,4 +1,4 @@
-package com.jy.swu.user.model;
+package com.jy.swu.member.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jy.swu.privateStudy.model.PrivateStudy;
@@ -6,18 +6,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Member {
 
     @Id
     @Column(nullable = false)
@@ -32,16 +30,20 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<PrivateStudy> privateStudyList = new ArrayList<>();
 
     @Builder
-    public User(String username, String name, String email, String password){
+    public Member(String username, String name, String email, String password, Role role){
         this.email = email;
         this.name = name;
         this.userName = username;
         this.password = password;
+        this.role = role;
     }
 
 

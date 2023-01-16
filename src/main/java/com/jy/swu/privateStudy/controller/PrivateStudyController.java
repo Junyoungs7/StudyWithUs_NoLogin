@@ -12,18 +12,17 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/private")
 @Slf4j
-public class Controller {
+public class PrivateStudyController {
 
     private final PrivateStudyService studyService;
 
     //개인 스터디 리스트 보여주기
-    @GetMapping("/{username}/list")
+    @GetMapping("/{username}")
     public ResponseEntity<?> getPrivateList(@PathVariable("username")String userName){
         try{
             List<PrivateStudy> privateStudyList = studyService.findStudyList(userName);
@@ -33,7 +32,7 @@ public class Controller {
         }
     }
 
-    //개인 스터디 생성
+    // 개인 스터디 생성
     @PostMapping("/create")
     public ResponseEntity<?> createPrivateStudy(@Valid @RequestBody CreateStudyRequestDTO requestDTO, BindingResult bindingResult){
 
@@ -50,7 +49,7 @@ public class Controller {
 
     }
 
-    // todo 생성
+//    todo 생성
     @PostMapping("/{userName}/{studyName}")
     public ResponseEntity<?> createTodo(@PathVariable("userName") String userName,
                                         @PathVariable("studyName") String studyName,

@@ -1,7 +1,7 @@
 package com.jy.swu.privateStudy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jy.swu.user.model.User;
+import com.jy.swu.member.model.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,12 +33,12 @@ public class PrivateStudy {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "Users_userName")
     @JsonIgnore
-    private User user;
+    private Member member;
 
     @Builder
-    public PrivateStudy(String name, User user){
+    public PrivateStudy(String name, Member member){
         this.name = name;
-        this.user = user;
+        this.member = member;
     }
 
     public PrivateStudy saveTodoList(Todo todo){
