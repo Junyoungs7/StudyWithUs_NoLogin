@@ -32,7 +32,7 @@ public class PrivateStudyService {
 
     public List<PrivateStudy> findStudyList(String userName){
         Member findMember = findUser(userName);
-        return studyRepository.findByUser(findMember);
+        return studyRepository.findByMember(findMember);
     }
 
     public void validDuplicated(String name){
