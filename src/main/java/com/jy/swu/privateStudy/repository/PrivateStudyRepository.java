@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface PrivateStudyRepository extends JpaRepository<PrivateStudy, UUID> {
     Optional<PrivateStudy> findById(UUID id);
-    List<PrivateStudy> findByMember(Member member);
+    List<PrivateStudy> findByUser(Member member);
 
     PrivateStudy findByName(String name);
 }

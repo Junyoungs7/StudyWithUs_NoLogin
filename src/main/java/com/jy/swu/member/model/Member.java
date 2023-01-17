@@ -34,7 +34,7 @@ public class Member {
     private Role role;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "user")
     private List<PrivateStudy> privateStudyList = new ArrayList<>();
 
     @Builder
