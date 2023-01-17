@@ -40,6 +40,8 @@ public class PrivateStudyController {
             return ResponseEntity.badRequest().body("다시 입력해주세요.");
         }
 
+        log.info("request create study"+requestDTO.getName()+requestDTO.getUserName());
+
         try{
             studyService.createStudy(requestDTO.getName(), requestDTO.getUserName());
             return ResponseEntity.ok().body("개인 스터디가 생성되었습니다.");

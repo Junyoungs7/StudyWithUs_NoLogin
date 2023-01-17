@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -22,17 +23,21 @@ public class PrivateStudyService {
     private final MemberRepository memberRepository;
 
     public Member findUser(String userName){
-        Member findMember = memberRepository.findByUserName(userName).get();
+        log.info("username: ",userName);
+        Optional<Member> findMember = memberRepository.findByUserName(userName);
+        Member member = findMember.get();
+        log.info("member name1 : "+findMember);
+        log.info("member name2 : "+findMember.get());
         if (findMember == null){
             throw new IllegalStateException("사용자가 없습니다.");
         }else{
-            return findMember;
+            return member;
         }
     }
 
     public List<PrivateStudy> findStudyList(String userName){
         Member findMember = findUser(userName);
-        return studyRepository.findByUser(findMember);
+        return studyRepository.findByMember(findMember);
     }
 
     public void validDuplicated(String name){
@@ -43,6 +48,7 @@ public class PrivateStudyService {
     }
 
     public void createStudy(String name, String userName){
+        log.info("createStudy: "+userName);
         Member createMember = findUser(userName);
         validDuplicated(name);
         PrivateStudy createStudy = PrivateStudy.builder().name(name).member(createMember).build();
