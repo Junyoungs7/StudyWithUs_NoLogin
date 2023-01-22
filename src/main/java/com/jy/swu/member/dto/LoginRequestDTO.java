@@ -18,7 +18,6 @@ public class LoginRequestDTO {
 
     @NotNull
     private String userName;
-
     @NotNull
     private String password;
 

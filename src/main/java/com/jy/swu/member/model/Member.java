@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member{
 
     @Id
     @Column(nullable = false)

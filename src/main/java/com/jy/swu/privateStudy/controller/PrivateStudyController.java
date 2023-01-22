@@ -2,6 +2,7 @@ package com.jy.swu.privateStudy.controller;
 
 import com.jy.swu.privateStudy.dto.CreateStudyRequestDTO;
 import com.jy.swu.privateStudy.dto.CreateTodoRequestDTO;
+import com.jy.swu.privateStudy.dto.PrivateStudyListDTO;
 import com.jy.swu.privateStudy.model.PrivateStudy;
 import com.jy.swu.privateStudy.service.PrivateStudyService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,10 @@ public class PrivateStudyController {
     @GetMapping("/{username}")
     public ResponseEntity<?> getPrivateList(@PathVariable("username")String userName){
         try{
-            List<PrivateStudy> privateStudyList = studyService.findStudyList(userName);
-            return ResponseEntity.ok().body(privateStudyList);
+            PrivateStudyListDTO privateStudyListDTO = PrivateStudyListDTO.builder()
+                    .privateStudyList(studyService.findStudyList(userName))
+                    .build();
+            return ResponseEntity.ok().body(privateStudyListDTO);
         }catch (IllegalStateException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

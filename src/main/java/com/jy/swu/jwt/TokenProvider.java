@@ -40,8 +40,6 @@ public class TokenProvider {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        log.info("String authorities: "+authorities);
-
         long now = (new Date()).getTime();
 
         // Access Token 생성
@@ -64,6 +62,7 @@ public class TokenProvider {
                 .refreshToken(refreshToken)
                 .grantType(BEARER_TYPE)
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+                .userName(authentication.getName())
                 .build();
     }
 
